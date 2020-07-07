@@ -7,6 +7,7 @@ reserved={
    'Sea' : 'ASIGN',
    'sea' : 'ASIGN',
    'igual' : 'EQ',
+   'a' : 'EQ2',
    'Mostrar' : 'PR',
    'mostrar' : 'PR',
    'Repetir' : 'RPT',
@@ -23,6 +24,7 @@ t_SU=r'[Mm]as'
 t_RE=r'[Mm]enos'
 t_ASIGN = r'[Ss]ea'
 t_EQ = r'[Ii]gual'
+t_EQ2 = r'a'
 t_PR = r'[Mm]ostrar'
 t_RPT = r'[Rr]epetir'
 
@@ -61,8 +63,8 @@ def p_resultado(t):
     
 
 def p_asignacion(t):
-    'resultado : ASIGN ID EQ s'
-    variables[t[2]]=t[4]
+    'resultado : ASIGN ID EQ EQ2 s'
+    variables[t[2]]=t[5]
 
 def p_expr_num(t):
     's : N'
