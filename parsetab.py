@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftSUREASIGN ASIGN EQ EQ2 ID N PR PR RE RPT RPT SU Vresultado : sresultado : ASIGN ID EQ EQ2 ss : Ns : IDs : s SU s\n        | s RE ss : PR ID \n    | PR s'
+_lr_signature = 'leftSUREASIGN ASIGN EQ EQ2 ID N PR PR RE RPT RPT SU Vresultado : sresultado : ASIGN ID EQ EQ2 ss : Ns : IDs : s SU s\n        | s RE ss : RE Ns : PR ID \n    | PR s'
     
-_lr_action_items = {'ASIGN':([0,],[3,]),'N':([0,6,7,8,15,],[5,5,5,5,5,]),'ID':([0,3,6,7,8,15,],[4,9,10,4,4,4,]),'PR':([0,6,7,8,15,],[6,6,6,6,6,]),'$end':([1,2,4,5,10,11,12,13,16,],[0,-1,-4,-3,-4,-8,-5,-6,-2,]),'SU':([2,4,5,10,11,12,13,16,],[7,-4,-3,-4,7,-5,-6,7,]),'RE':([2,4,5,10,11,12,13,16,],[8,-4,-3,-4,8,-5,-6,8,]),'EQ':([9,],[14,]),'EQ2':([14,],[15,]),}
+_lr_action_items = {'ASIGN':([0,],[3,]),'N':([0,6,7,8,9,17,],[5,11,5,5,5,5,]),'ID':([0,3,7,8,9,17,],[4,10,12,4,4,4,]),'RE':([0,2,4,5,7,8,9,11,12,13,14,15,17,18,],[6,9,-4,-3,6,6,6,-7,-4,9,-5,-6,6,9,]),'PR':([0,7,8,9,17,],[7,7,7,7,7,]),'$end':([1,2,4,5,11,12,13,14,15,18,],[0,-1,-4,-3,-7,-4,-9,-5,-6,-2,]),'SU':([2,4,5,11,12,13,14,15,18,],[8,-4,-3,-7,-4,8,-5,-6,8,]),'EQ':([10,],[16,]),'EQ2':([16,],[17,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'resultado':([0,],[1,]),'s':([0,6,7,8,15,],[2,11,12,13,16,]),}
+_lr_goto_items = {'resultado':([0,],[1,]),'s':([0,7,8,9,17,],[2,13,14,15,18,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -33,6 +33,7 @@ _lr_productions = [
   ('s -> ID','s',1,'p_expr_id','Interpreter.py',74),
   ('s -> s SU s','s',3,'p_expr_op','Interpreter.py',82),
   ('s -> s RE s','s',3,'p_expr_op','Interpreter.py',83),
-  ('s -> PR ID','s',2,'p_PR','Interpreter.py',93),
-  ('s -> PR s','s',2,'p_PR','Interpreter.py',94),
+  ('s -> RE N','s',2,'p_expr_num_neg','Interpreter.py',90),
+  ('s -> PR ID','s',2,'p_PR','Interpreter.py',97),
+  ('s -> PR s','s',2,'p_PR','Interpreter.py',98),
 ]

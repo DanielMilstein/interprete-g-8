@@ -86,6 +86,10 @@ def p_expr_op(t):
     elif t[2] == 'menos':
         t[0]=t[1]-t[3]
 
+def p_expr_num_neg(t):
+    's : RE N'
+    t[0] = -t[2]
+
 def p_error(t):
     print(":'(")
 

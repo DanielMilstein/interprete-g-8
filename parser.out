@@ -14,18 +14,19 @@ Rule 3     s -> N
 Rule 4     s -> ID
 Rule 5     s -> s SU s
 Rule 6     s -> s RE s
-Rule 7     s -> PR ID
-Rule 8     s -> PR s
+Rule 7     s -> RE N
+Rule 8     s -> PR ID
+Rule 9     s -> PR s
 
 Terminals, with rules where they appear
 
 ASIGN                : 2
 EQ                   : 2
 EQ2                  : 2
-ID                   : 2 4 7
-N                    : 3
-PR                   : 7 8
-RE                   : 6
+ID                   : 2 4 8
+N                    : 3 7
+PR                   : 8 9
+RE                   : 6 7
 RPT                  : 
 SU                   : 5
 V                    : 
@@ -34,7 +35,7 @@ error                :
 Nonterminals, with rules where they appear
 
 resultado            : 0
-s                    : 1 2 5 5 6 6 8
+s                    : 1 2 5 5 6 6 9
 
 Parsing method: LALR
 
@@ -47,13 +48,15 @@ state 0
     (4) s -> . ID
     (5) s -> . s SU s
     (6) s -> . s RE s
-    (7) s -> . PR ID
-    (8) s -> . PR s
+    (7) s -> . RE N
+    (8) s -> . PR ID
+    (9) s -> . PR s
 
     ASIGN           shift and go to state 3
     N               shift and go to state 5
     ID              shift and go to state 4
-    PR              shift and go to state 6
+    RE              shift and go to state 6
+    PR              shift and go to state 7
 
     resultado                      shift and go to state 1
     s                              shift and go to state 2
@@ -71,15 +74,15 @@ state 2
     (6) s -> s . RE s
 
     $end            reduce using rule 1 (resultado -> s .)
-    SU              shift and go to state 7
-    RE              shift and go to state 8
+    SU              shift and go to state 8
+    RE              shift and go to state 9
 
 
 state 3
 
     (2) resultado -> ASIGN . ID EQ EQ2 s
 
-    ID              shift and go to state 9
+    ID              shift and go to state 10
 
 
 state 4
@@ -102,63 +105,85 @@ state 5
 
 state 6
 
-    (7) s -> PR . ID
-    (8) s -> PR . s
+    (7) s -> RE . N
+
+    N               shift and go to state 11
+
+
+state 7
+
+    (8) s -> PR . ID
+    (9) s -> PR . s
     (3) s -> . N
     (4) s -> . ID
     (5) s -> . s SU s
     (6) s -> . s RE s
-    (7) s -> . PR ID
-    (8) s -> . PR s
+    (7) s -> . RE N
+    (8) s -> . PR ID
+    (9) s -> . PR s
 
-    ID              shift and go to state 10
+    ID              shift and go to state 12
     N               shift and go to state 5
-    PR              shift and go to state 6
+    RE              shift and go to state 6
+    PR              shift and go to state 7
 
-    s                              shift and go to state 11
+    s                              shift and go to state 13
 
-state 7
+state 8
 
     (5) s -> s SU . s
     (3) s -> . N
     (4) s -> . ID
     (5) s -> . s SU s
     (6) s -> . s RE s
-    (7) s -> . PR ID
-    (8) s -> . PR s
+    (7) s -> . RE N
+    (8) s -> . PR ID
+    (9) s -> . PR s
 
     N               shift and go to state 5
     ID              shift and go to state 4
-    PR              shift and go to state 6
+    RE              shift and go to state 6
+    PR              shift and go to state 7
 
-    s                              shift and go to state 12
+    s                              shift and go to state 14
 
-state 8
+state 9
 
     (6) s -> s RE . s
     (3) s -> . N
     (4) s -> . ID
     (5) s -> . s SU s
     (6) s -> . s RE s
-    (7) s -> . PR ID
-    (8) s -> . PR s
+    (7) s -> . RE N
+    (8) s -> . PR ID
+    (9) s -> . PR s
 
     N               shift and go to state 5
     ID              shift and go to state 4
-    PR              shift and go to state 6
+    RE              shift and go to state 6
+    PR              shift and go to state 7
 
-    s                              shift and go to state 13
-
-state 9
-
-    (2) resultado -> ASIGN ID . EQ EQ2 s
-
-    EQ              shift and go to state 14
-
+    s                              shift and go to state 15
 
 state 10
 
-    (7) s -> PR ID .
+    (2) resultado -> ASIGN ID . EQ EQ2 s
+
+    EQ              shift and go to state 16
+
+
+state 11
+
+    (7) s -> RE N .
+
+    SU              reduce using rule 7 (s -> RE N .)
+    RE              reduce using rule 7 (s -> RE N .)
+    $end            reduce using rule 7 (s -> RE N .)
+
+
+state 12
+
+    (8) s -> PR ID .
     (4) s -> ID .
 
   ! reduce/reduce conflict for SU resolved using rule 4 (s -> ID .)
@@ -168,28 +193,28 @@ state 10
     RE              reduce using rule 4 (s -> ID .)
     $end            reduce using rule 4 (s -> ID .)
 
-  ! SU              [ reduce using rule 7 (s -> PR ID .) ]
-  ! RE              [ reduce using rule 7 (s -> PR ID .) ]
-  ! $end            [ reduce using rule 7 (s -> PR ID .) ]
+  ! SU              [ reduce using rule 8 (s -> PR ID .) ]
+  ! RE              [ reduce using rule 8 (s -> PR ID .) ]
+  ! $end            [ reduce using rule 8 (s -> PR ID .) ]
 
 
-state 11
+state 13
 
-    (8) s -> PR s .
+    (9) s -> PR s .
     (5) s -> s . SU s
     (6) s -> s . RE s
 
   ! shift/reduce conflict for SU resolved as shift
   ! shift/reduce conflict for RE resolved as shift
-    $end            reduce using rule 8 (s -> PR s .)
-    SU              shift and go to state 7
-    RE              shift and go to state 8
+    $end            reduce using rule 9 (s -> PR s .)
+    SU              shift and go to state 8
+    RE              shift and go to state 9
 
-  ! SU              [ reduce using rule 8 (s -> PR s .) ]
-  ! RE              [ reduce using rule 8 (s -> PR s .) ]
+  ! SU              [ reduce using rule 9 (s -> PR s .) ]
+  ! RE              [ reduce using rule 9 (s -> PR s .) ]
 
 
-state 12
+state 14
 
     (5) s -> s SU s .
     (5) s -> s . SU s
@@ -199,11 +224,11 @@ state 12
     RE              reduce using rule 5 (s -> s SU s .)
     $end            reduce using rule 5 (s -> s SU s .)
 
-  ! SU              [ shift and go to state 7 ]
-  ! RE              [ shift and go to state 8 ]
+  ! SU              [ shift and go to state 8 ]
+  ! RE              [ shift and go to state 9 ]
 
 
-state 13
+state 15
 
     (6) s -> s RE s .
     (5) s -> s . SU s
@@ -213,48 +238,50 @@ state 13
     RE              reduce using rule 6 (s -> s RE s .)
     $end            reduce using rule 6 (s -> s RE s .)
 
-  ! SU              [ shift and go to state 7 ]
-  ! RE              [ shift and go to state 8 ]
+  ! SU              [ shift and go to state 8 ]
+  ! RE              [ shift and go to state 9 ]
 
 
-state 14
+state 16
 
     (2) resultado -> ASIGN ID EQ . EQ2 s
 
-    EQ2             shift and go to state 15
+    EQ2             shift and go to state 17
 
 
-state 15
+state 17
 
     (2) resultado -> ASIGN ID EQ EQ2 . s
     (3) s -> . N
     (4) s -> . ID
     (5) s -> . s SU s
     (6) s -> . s RE s
-    (7) s -> . PR ID
-    (8) s -> . PR s
+    (7) s -> . RE N
+    (8) s -> . PR ID
+    (9) s -> . PR s
 
     N               shift and go to state 5
     ID              shift and go to state 4
-    PR              shift and go to state 6
+    RE              shift and go to state 6
+    PR              shift and go to state 7
 
-    s                              shift and go to state 16
+    s                              shift and go to state 18
 
-state 16
+state 18
 
     (2) resultado -> ASIGN ID EQ EQ2 s .
     (5) s -> s . SU s
     (6) s -> s . RE s
 
     $end            reduce using rule 2 (resultado -> ASIGN ID EQ EQ2 s .)
-    SU              shift and go to state 7
-    RE              shift and go to state 8
+    SU              shift and go to state 8
+    RE              shift and go to state 9
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for SU in state 11 resolved as shift
-WARNING: shift/reduce conflict for RE in state 11 resolved as shift
-WARNING: reduce/reduce conflict in state 10 resolved using rule (s -> ID)
-WARNING: rejected rule (s -> PR ID) in state 10
+WARNING: shift/reduce conflict for SU in state 13 resolved as shift
+WARNING: shift/reduce conflict for RE in state 13 resolved as shift
+WARNING: reduce/reduce conflict in state 12 resolved using rule (s -> ID)
+WARNING: rejected rule (s -> PR ID) in state 12
 WARNING: Rule (s -> PR ID) is never reduced
