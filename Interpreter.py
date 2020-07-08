@@ -12,7 +12,8 @@ reserved={
    'mostrar' : 'PR',
    'Repetir' : 'RPT',
    'repetir' : 'RPT',
-   'veces' : 'V'
+   'veces' : 'V',
+   'vez' : 'V'
 }
 
 tokens = [
@@ -107,12 +108,15 @@ def p_PR(t):
         t[0] = t[2]
         print(t[0])
 
-#def p_repetir(t):
-#    's : RPT N V s'
-#    
-#    for i in range(t[2]):
-#        t[0] = t[4]
-#        print(t[0])
+def p_repetir(t):
+    's : RPT N V s'
+    if t[2] >= 2:
+        for i in range(t[2]):
+            t[0] = t[4]
+    else:
+        print("No se puede repetir menos de 2 veces.")
+        return
+
 
 
 lexer=lex.lex()

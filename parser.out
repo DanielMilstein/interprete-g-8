@@ -1,10 +1,5 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    RPT
-    V
-
 Grammar
 
 Rule 0     S' -> resultado
@@ -17,6 +12,7 @@ Rule 6     s -> s RE s
 Rule 7     s -> RE N
 Rule 8     s -> PR ID
 Rule 9     s -> PR s
+Rule 10    s -> RPT N V s
 
 Terminals, with rules where they appear
 
@@ -24,18 +20,18 @@ ASIGN                : 2
 EQ                   : 2
 EQ2                  : 2
 ID                   : 2 4 8
-N                    : 3 7
+N                    : 3 7 10
 PR                   : 8 9
 RE                   : 6 7
-RPT                  : 
+RPT                  : 10
 SU                   : 5
-V                    : 
+V                    : 10
 error                : 
 
 Nonterminals, with rules where they appear
 
 resultado            : 0
-s                    : 1 2 5 5 6 6 9
+s                    : 1 2 5 5 6 6 9 10
 
 Parsing method: LALR
 
@@ -51,12 +47,14 @@ state 0
     (7) s -> . RE N
     (8) s -> . PR ID
     (9) s -> . PR s
+    (10) s -> . RPT N V s
 
     ASIGN           shift and go to state 3
     N               shift and go to state 5
     ID              shift and go to state 4
     RE              shift and go to state 6
     PR              shift and go to state 7
+    RPT             shift and go to state 8
 
     resultado                      shift and go to state 1
     s                              shift and go to state 2
@@ -74,15 +72,15 @@ state 2
     (6) s -> s . RE s
 
     $end            reduce using rule 1 (resultado -> s .)
-    SU              shift and go to state 8
-    RE              shift and go to state 9
+    SU              shift and go to state 9
+    RE              shift and go to state 10
 
 
 state 3
 
     (2) resultado -> ASIGN . ID EQ EQ2 s
 
-    ID              shift and go to state 10
+    ID              shift and go to state 11
 
 
 state 4
@@ -107,7 +105,7 @@ state 6
 
     (7) s -> RE . N
 
-    N               shift and go to state 11
+    N               shift and go to state 12
 
 
 state 7
@@ -121,15 +119,24 @@ state 7
     (7) s -> . RE N
     (8) s -> . PR ID
     (9) s -> . PR s
+    (10) s -> . RPT N V s
 
-    ID              shift and go to state 12
+    ID              shift and go to state 13
     N               shift and go to state 5
     RE              shift and go to state 6
     PR              shift and go to state 7
+    RPT             shift and go to state 8
 
-    s                              shift and go to state 13
+    s                              shift and go to state 14
 
 state 8
+
+    (10) s -> RPT . N V s
+
+    N               shift and go to state 15
+
+
+state 9
 
     (5) s -> s SU . s
     (3) s -> . N
@@ -139,15 +146,17 @@ state 8
     (7) s -> . RE N
     (8) s -> . PR ID
     (9) s -> . PR s
+    (10) s -> . RPT N V s
 
     N               shift and go to state 5
     ID              shift and go to state 4
     RE              shift and go to state 6
     PR              shift and go to state 7
+    RPT             shift and go to state 8
 
-    s                              shift and go to state 14
+    s                              shift and go to state 16
 
-state 9
+state 10
 
     (6) s -> s RE . s
     (3) s -> . N
@@ -157,22 +166,24 @@ state 9
     (7) s -> . RE N
     (8) s -> . PR ID
     (9) s -> . PR s
+    (10) s -> . RPT N V s
 
     N               shift and go to state 5
     ID              shift and go to state 4
     RE              shift and go to state 6
     PR              shift and go to state 7
+    RPT             shift and go to state 8
 
-    s                              shift and go to state 15
+    s                              shift and go to state 17
 
-state 10
+state 11
 
     (2) resultado -> ASIGN ID . EQ EQ2 s
 
-    EQ              shift and go to state 16
+    EQ              shift and go to state 18
 
 
-state 11
+state 12
 
     (7) s -> RE N .
 
@@ -181,7 +192,7 @@ state 11
     $end            reduce using rule 7 (s -> RE N .)
 
 
-state 12
+state 13
 
     (8) s -> PR ID .
     (4) s -> ID .
@@ -198,7 +209,7 @@ state 12
   ! $end            [ reduce using rule 8 (s -> PR ID .) ]
 
 
-state 13
+state 14
 
     (9) s -> PR s .
     (5) s -> s . SU s
@@ -207,14 +218,21 @@ state 13
   ! shift/reduce conflict for SU resolved as shift
   ! shift/reduce conflict for RE resolved as shift
     $end            reduce using rule 9 (s -> PR s .)
-    SU              shift and go to state 8
-    RE              shift and go to state 9
+    SU              shift and go to state 9
+    RE              shift and go to state 10
 
   ! SU              [ reduce using rule 9 (s -> PR s .) ]
   ! RE              [ reduce using rule 9 (s -> PR s .) ]
 
 
-state 14
+state 15
+
+    (10) s -> RPT N . V s
+
+    V               shift and go to state 19
+
+
+state 16
 
     (5) s -> s SU s .
     (5) s -> s . SU s
@@ -224,11 +242,11 @@ state 14
     RE              reduce using rule 5 (s -> s SU s .)
     $end            reduce using rule 5 (s -> s SU s .)
 
-  ! SU              [ shift and go to state 8 ]
-  ! RE              [ shift and go to state 9 ]
+  ! SU              [ shift and go to state 9 ]
+  ! RE              [ shift and go to state 10 ]
 
 
-state 15
+state 17
 
     (6) s -> s RE s .
     (5) s -> s . SU s
@@ -238,18 +256,38 @@ state 15
     RE              reduce using rule 6 (s -> s RE s .)
     $end            reduce using rule 6 (s -> s RE s .)
 
-  ! SU              [ shift and go to state 8 ]
-  ! RE              [ shift and go to state 9 ]
+  ! SU              [ shift and go to state 9 ]
+  ! RE              [ shift and go to state 10 ]
 
 
-state 16
+state 18
 
     (2) resultado -> ASIGN ID EQ . EQ2 s
 
-    EQ2             shift and go to state 17
+    EQ2             shift and go to state 20
 
 
-state 17
+state 19
+
+    (10) s -> RPT N V . s
+    (3) s -> . N
+    (4) s -> . ID
+    (5) s -> . s SU s
+    (6) s -> . s RE s
+    (7) s -> . RE N
+    (8) s -> . PR ID
+    (9) s -> . PR s
+    (10) s -> . RPT N V s
+
+    N               shift and go to state 5
+    ID              shift and go to state 4
+    RE              shift and go to state 6
+    PR              shift and go to state 7
+    RPT             shift and go to state 8
+
+    s                              shift and go to state 21
+
+state 20
 
     (2) resultado -> ASIGN ID EQ EQ2 . s
     (3) s -> . N
@@ -259,29 +297,49 @@ state 17
     (7) s -> . RE N
     (8) s -> . PR ID
     (9) s -> . PR s
+    (10) s -> . RPT N V s
 
     N               shift and go to state 5
     ID              shift and go to state 4
     RE              shift and go to state 6
     PR              shift and go to state 7
+    RPT             shift and go to state 8
 
-    s                              shift and go to state 18
+    s                              shift and go to state 22
 
-state 18
+state 21
+
+    (10) s -> RPT N V s .
+    (5) s -> s . SU s
+    (6) s -> s . RE s
+
+  ! shift/reduce conflict for SU resolved as shift
+  ! shift/reduce conflict for RE resolved as shift
+    $end            reduce using rule 10 (s -> RPT N V s .)
+    SU              shift and go to state 9
+    RE              shift and go to state 10
+
+  ! SU              [ reduce using rule 10 (s -> RPT N V s .) ]
+  ! RE              [ reduce using rule 10 (s -> RPT N V s .) ]
+
+
+state 22
 
     (2) resultado -> ASIGN ID EQ EQ2 s .
     (5) s -> s . SU s
     (6) s -> s . RE s
 
     $end            reduce using rule 2 (resultado -> ASIGN ID EQ EQ2 s .)
-    SU              shift and go to state 8
-    RE              shift and go to state 9
+    SU              shift and go to state 9
+    RE              shift and go to state 10
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for SU in state 13 resolved as shift
-WARNING: shift/reduce conflict for RE in state 13 resolved as shift
-WARNING: reduce/reduce conflict in state 12 resolved using rule (s -> ID)
-WARNING: rejected rule (s -> PR ID) in state 12
+WARNING: shift/reduce conflict for SU in state 14 resolved as shift
+WARNING: shift/reduce conflict for RE in state 14 resolved as shift
+WARNING: shift/reduce conflict for SU in state 21 resolved as shift
+WARNING: shift/reduce conflict for RE in state 21 resolved as shift
+WARNING: reduce/reduce conflict in state 13 resolved using rule (s -> ID)
+WARNING: rejected rule (s -> PR ID) in state 13
 WARNING: Rule (s -> PR ID) is never reduced

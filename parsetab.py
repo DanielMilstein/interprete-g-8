@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftSUREASIGN ASIGN EQ EQ2 ID N PR PR RE RPT RPT SU Vresultado : sresultado : ASIGN ID EQ EQ2 ss : Ns : IDs : s SU s\n        | s RE ss : RE Ns : PR ID \n    | PR s'
+_lr_signature = 'leftSUREASIGN ASIGN EQ EQ2 ID N PR PR RE RPT RPT SU V Vresultado : sresultado : ASIGN ID EQ EQ2 ss : Ns : IDs : s SU s\n        | s RE ss : RE Ns : PR ID \n    | PR ss : RPT N V s'
     
-_lr_action_items = {'ASIGN':([0,],[3,]),'N':([0,6,7,8,9,17,],[5,11,5,5,5,5,]),'ID':([0,3,7,8,9,17,],[4,10,12,4,4,4,]),'RE':([0,2,4,5,7,8,9,11,12,13,14,15,17,18,],[6,9,-4,-3,6,6,6,-7,-4,9,-5,-6,6,9,]),'PR':([0,7,8,9,17,],[7,7,7,7,7,]),'$end':([1,2,4,5,11,12,13,14,15,18,],[0,-1,-4,-3,-7,-4,-9,-5,-6,-2,]),'SU':([2,4,5,11,12,13,14,15,18,],[8,-4,-3,-7,-4,8,-5,-6,8,]),'EQ':([10,],[16,]),'EQ2':([16,],[17,]),}
+_lr_action_items = {'ASIGN':([0,],[3,]),'N':([0,6,7,8,9,10,19,20,],[5,12,5,15,5,5,5,5,]),'ID':([0,3,7,9,10,19,20,],[4,11,13,4,4,4,4,]),'RE':([0,2,4,5,7,9,10,12,13,14,16,17,19,20,21,22,],[6,10,-4,-3,6,6,6,-7,-4,10,-5,-6,6,6,10,10,]),'PR':([0,7,9,10,19,20,],[7,7,7,7,7,7,]),'RPT':([0,7,9,10,19,20,],[8,8,8,8,8,8,]),'$end':([1,2,4,5,12,13,14,16,17,21,22,],[0,-1,-4,-3,-7,-4,-9,-5,-6,-10,-2,]),'SU':([2,4,5,12,13,14,16,17,21,22,],[9,-4,-3,-7,-4,9,-5,-6,9,9,]),'EQ':([11,],[18,]),'V':([15,],[19,]),'EQ2':([18,],[20,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'resultado':([0,],[1,]),'s':([0,7,8,9,17,],[2,13,14,15,18,]),}
+_lr_goto_items = {'resultado':([0,],[1,]),'s':([0,7,9,10,19,20,],[2,14,16,17,21,22,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,13 +27,14 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> resultado","S'",1,None,None,None),
-  ('resultado -> s','resultado',1,'p_resultado','Interpreter.py',62),
-  ('resultado -> ASIGN ID EQ EQ2 s','resultado',5,'p_asignacion','Interpreter.py',66),
-  ('s -> N','s',1,'p_expr_num','Interpreter.py',70),
-  ('s -> ID','s',1,'p_expr_id','Interpreter.py',74),
-  ('s -> s SU s','s',3,'p_expr_op','Interpreter.py',82),
-  ('s -> s RE s','s',3,'p_expr_op','Interpreter.py',83),
-  ('s -> RE N','s',2,'p_expr_num_neg','Interpreter.py',90),
-  ('s -> PR ID','s',2,'p_PR','Interpreter.py',97),
-  ('s -> PR s','s',2,'p_PR','Interpreter.py',98),
+  ('resultado -> s','resultado',1,'p_resultado','Interpreter.py',63),
+  ('resultado -> ASIGN ID EQ EQ2 s','resultado',5,'p_asignacion','Interpreter.py',67),
+  ('s -> N','s',1,'p_expr_num','Interpreter.py',71),
+  ('s -> ID','s',1,'p_expr_id','Interpreter.py',75),
+  ('s -> s SU s','s',3,'p_expr_op','Interpreter.py',83),
+  ('s -> s RE s','s',3,'p_expr_op','Interpreter.py',84),
+  ('s -> RE N','s',2,'p_expr_num_neg','Interpreter.py',91),
+  ('s -> PR ID','s',2,'p_PR','Interpreter.py',98),
+  ('s -> PR s','s',2,'p_PR','Interpreter.py',99),
+  ('s -> RPT N V s','s',4,'p_repetir','Interpreter.py',112),
 ]
