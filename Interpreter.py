@@ -30,6 +30,7 @@ t_PR = r'[Mm]ostrar'
 t_RPT = r'[Rr]epetir'
 
 
+
 def t_N(t):
     r'\-*[0-9]+'
     st = str(t.value)
@@ -55,16 +56,38 @@ def t_error(t):
     print(":(")
     t.lexer.skip(1)
 
-precedence=(('left', 'SU', 'RE'),)
+precedence=(('left', 'SU', 'RE'),('left', 'ASIGN', 'EQ'),('left' ,'RPT', 'V'),)
 
 variables={}
 
 def p_resultado(t):
-    'resultado : s'
+    '''resultado : s
+    | rep'''
+    
+def p_RPT(t):
+   'exp : s'
     
 
+def p_repetir_mostrar(t):
+    'rep : RPT N V s'
+    if t[2] >= 2:
+        for x in range(t[2]-1):
+            print(t[4])
+            
+    else:
+        print("No se puede repetir menos de 2 veces.")
+        return
+
+def p_repetir_zeromasigual(t):
+    '''s : RPT N V ASIGN ID EQ EQ2 s
+        | RPT ID V ASIGN ID EQ EQ2 s'''
+    t[0] = 0
+    for i in range(t[2]):
+        variables[t[5]] += t[8]
+        t[0] += t[8]
+
 def p_asignacion(t):
-    'resultado : ASIGN ID EQ EQ2 s'
+    's : ASIGN ID EQ EQ2 s'
     variables[t[2]]=t[5]
 
 def p_expr_num(t):
@@ -96,7 +119,8 @@ def p_error(t):
 
 def p_PR(t):
     '''s : PR ID 
-    | PR s'''
+    | PR s 
+    | PR N'''
     var_names = list(variables.keys())
     if var_names.count(t[2]) == 1:
         try:
@@ -108,15 +132,6 @@ def p_PR(t):
         t[0] = t[2]
         print(t[0])
 
-def p_repetir(t):
-    's : RPT N V s'
-    if t[2] >= 2:
-        for i in range(t[2]):
-            t[0] = t[4]
-    else:
-        print("No se puede repetir menos de 2 veces.")
-        return
-
 
 
 lexer=lex.lex()
@@ -127,3 +142,6 @@ while True:
     except EOFError:
         break
     parser.parse(data)
+    
+
+
